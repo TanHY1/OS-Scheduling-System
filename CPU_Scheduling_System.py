@@ -1,82 +1,5 @@
-def round_robin(process_list, time_quantum):
-    #round_robin: [pid, arrival time, burst time]
-    time = 0
-    gantt_chart = []
-    completed = {}
-    waiting_queue = []
-
-    # Sort the process list by arrival time
-    process_list.sort(key=lambda x: x[1])
-
-    # Keep track of processes that have been started but not yet completed
-    remaining_burst = {p[0]: p[2] for p in process_list}
-
-    while process_list or waiting_queue:
-        # Add any arrived processes to the waiting queue
-        while process_list and process_list[0][1] <= time:
-            waiting_queue.append(process_list.pop(0))
-
-        if waiting_queue:
-            process = waiting_queue.pop(0)
-            gantt_chart.append(process[0])
-
-            # Execute the process for the time quantum or remaining burst time
-            if remaining_burst[process[0]] <= time_quantum:
-                time += remaining_burst[process[0]]
-                completed[process[0]] = time
-                remaining_burst[process[0]] = 0
-            else:
-                time += time_quantum
-                remaining_burst[process[0]] -= time_quantum
-
-                # Add any newly arrived processes to the waiting queue
-                while process_list and process_list[0][1] <= time:
-                    waiting_queue.append(process_list.pop(0))
-
-                # Requeue the current process
-                waiting_queue.append(process)
-        else:
-            gantt_chart.append("Idle")
-            time += 1
-
-    print("Gantt Chart:", gantt_chart)
-    print("Completion Times:", completed)
-
-def shortest_job_next(SJN_process_list):
-    # Shortest Job Next = [process_id, arrival_time, burst_time]
-    time = 0
-    SJN_gantt_chart = []
-    completed = {}
-    SJN_waiting_queue = []
-
-    # Sort process list by arrival time
-    SJN_process_list.sort(key=lambda x: x[1])
-
-    # Keep track of processes that have been started but not yet completed
-    # p[0] = process_id, p[2] = burst time
-    SJN_burst_time = {p[0]: p[2] for p in SJN_process_list}
-
-    while SJN_process_list or SJN_waiting_queue:
-        # Add any arrived processes to the waiting queue
-        while SJN_process_list and (SJN_process_list[0][1] <= time):
-            SJN_waiting_queue.append(SJN_process_list.pop(0))
-
-        # If there are processes in the waiting queue, choose the process with the shortest burst time
-        if SJN_waiting_queue:
-            SJN_waiting_queue.sort(key=lambda x: x[2])
-            process = SJN_waiting_queue.pop(0)
-            SJN_gantt_chart.append(process[0])
-
-            # Execute the process until it finishes
-            time += SJN_burst_time[process[0]]
-            completed[process[0]] = time
-
-        else:
-            SJN_gantt_chart.append("Idle")
-            time += 1
-
-    print("SJN Gantt Chart:", SJN_gantt_chart)
-    print("SJN Completion Times:", completed)
+from roundRobin import round_robin
+from shortJobNext import shortest_job_next
 
 if __name__ == '__main__':
     while True:
@@ -117,9 +40,9 @@ if __name__ == '__main__':
                     print()
                 
                 print("Process list:", RoundRobin_process_list)
+                print(round_robin(RoundRobin_process_list, time_quantum))
 
                 #process_list = [["P1", 0, 10], ["P2", 1, 2], ["P3", 2, 3], ["P4", 3, 1], ["P5", 4, 5]]
-                round_robin(RoundRobin_process_list, time_quantum)
                 break
 
             #Shortest Job Next (SJN)
@@ -211,12 +134,4 @@ if __name__ == '__main__':
         else:
             print("Invalid choice. Please enter a number between 1 and 4.")
 
-
-
-    '''
-    process_list = [["P1", 0, 10], ["P2", 1, 2], ["P3", 2, 3], ["P4", 3, 1], ["P5", 4, 5]]
-    time_quantum = 3
-    round_robin(process_list, time_quantum)
-    '''
-    
 
