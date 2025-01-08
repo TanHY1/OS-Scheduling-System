@@ -1,5 +1,6 @@
 from roundRobin import round_robin
 from shortJobNext import shortest_job_next
+from NonPreemptivePriority import non_preemptive_priority
 
 if __name__ == '__main__':
     while True:
@@ -51,7 +52,7 @@ if __name__ == '__main__':
                 print("Please enter how many processes that you want to schedule:")
                 while True:
                     num_processes = int(input())
-                    if num_processes < 0:
+                    if num_processes < 0 or num_processes != int(num_processes):
                         print("Invalid number of processes. Please enter a positive number.")
                     else:
                         break
@@ -64,7 +65,7 @@ if __name__ == '__main__':
                         arrival_time = int(input(f"Please enter the arrival time for process {process_id}: "))
                         burst_time = int(input(f"Please enter the burst time for process {process_id}: "))
                         priority = int(input(f"Please enter the priority for process {process_id}: "))
-                        if (burst_time < 0 or arrival_time < 0 or priority < 0):
+                        if (burst_time < 0 or arrival_time < 0 or priority < 0 or burst_time != int(burst_time) or arrival_time != int(arrival_time) or priority != int(priority)):
                             print("Invalid burst time, arrival time or priority. Please enter a positive number.")
                         else:
                             SJN_process_list.append([process_id, arrival_time, burst_time, priority])
@@ -74,13 +75,14 @@ if __name__ == '__main__':
 
                 shortest_job_next(SJN_process_list)
                 break
-            
+
+            #Preemptive Priority
             elif choice == 3:
                 print("You have chosen Preemptive Priority.")
                 print("Please enter how many processes that you want to schedule:")
                 while True:
                     num_processes = int(input())
-                    if num_processes < 0:
+                    if num_processes < 0 or num_processes != int(num_processes):
                         print("Invalid number of processes. Please enter a positive number.")
                     else:
                         break
@@ -93,7 +95,7 @@ if __name__ == '__main__':
                         arrival_time = int(input(f"Please enter the arrival time for process {process_id}: "))
                         burst_time = int(input(f"Please enter the burst time for process {process_id}: "))
                         priority = int(input(f"Please enter the priority for process {process_id}: "))
-                        if (burst_time < 0 or arrival_time < 0 or priority < 0):
+                        if (burst_time < 0 or arrival_time < 0 or priority < 0 or burst_time != int(burst_time) or arrival_time != int(arrival_time) or priority != int(priority)):
                             print("Invalid burst time, arrival time or priority. Please enter a positive number.")
                         else:
                             PreemptivePriority_process_list.append([process_id, arrival_time, burst_time, priority])
@@ -103,12 +105,14 @@ if __name__ == '__main__':
 
                 #preemptive_priority(PreemptivePriority_process_list)
                 break
+
+            #Non-preemptive Priority
             elif choice == 4:
                 print("You have chosen Non-preeemptive Priority.")
                 print("Please enter how many processes that you want to schedule:")
                 while True:
                     num_processes = int(input())
-                    if num_processes < 0:
+                    if num_processes < 0 or num_processes != int(num_processes):
                         print("Invalid number of processes. Please enter a positive number.")
                     else:
                         break
@@ -121,7 +125,7 @@ if __name__ == '__main__':
                         arrival_time = int(input(f"Please enter the arrival time for process {process_id}: "))
                         burst_time = int(input(f"Please enter the burst time for process {process_id}: "))
                         priority = int(input(f"Please enter the priority for process {process_id}: "))
-                        if (burst_time < 0 or arrival_time < 0 or priority < 0):
+                        if (burst_time < 0 or arrival_time < 0 or priority < 0 or burst_time != int(burst_time) or arrival_time != int(arrival_time) or priority != int(priority)):
                             print("Invalid burst time, arrival time or priority. Please enter a positive number.")
                         else:
                             NonPreemptivePriority_process_list.append([process_id, arrival_time, burst_time, priority])
@@ -129,7 +133,7 @@ if __name__ == '__main__':
                     print()
                 print("Non-preemptive Priority process list:", NonPreemptivePriority_process_list)
 
-                #non_preemptive_priority(NonPreemptivePriority_process_list)
+                non_preemptive_priority(NonPreemptivePriority_process_list)
                 break
         else:
             print("Invalid choice. Please enter a number between 1 and 4.")

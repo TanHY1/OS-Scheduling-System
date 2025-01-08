@@ -1,5 +1,5 @@
 def shortest_job_next(SJN_process_list):
-    # Shortest Job Next = [process_id, arrival_time, burst_time]
+    # Shortest Job Next = [process_id, arrival_time, burst_time, priority]
     time = 0
     SJN_gantt_chart = []
     completed = {}
@@ -34,3 +34,4 @@ def shortest_job_next(SJN_process_list):
     print("SJN Gantt Chart:", SJN_gantt_chart)
     print()
     print("SJN Completion Times:", completed)
+    return completed
